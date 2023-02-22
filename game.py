@@ -12,12 +12,14 @@ class Game:
             Pokemon("5", "Krabby", 32, "Its pincers are not only powerful weapons, they are used for balance when walking sideways. Its pincers are superb weapons. They sometimes break off during battle, but they grow back fast.", 100)
         ]
         self.opponent = Player(random.choice(self.pokemon_list))
-    
+
+        #select Pokemon and call player menu
     def start_main_menu(self):
         print("Welcome to Pokemon Game!")
         self.player.pick_pokemon(self.pokemon_list)
         self.start_player_menu()
 
+       #player menu displays options after Pokemon was selected
     def start_player_menu(self):
         user_selection = input("1 - Read description about your pokemon, \n2 - Change Pokemon \n3 - Start Fight! \nYour choice:  ")
         if user_selection == "1":
@@ -30,61 +32,60 @@ class Game:
             self.start_player_menu()
         elif user_selection == "3":
             #start fight
-            print("Your opponent Pokemon is " + self.opponent.selected_pokemon.name)
+            print("Your opponent Pokemon is " + self.opponent.selected_pokemon.name + "\n")
             self.battle_menu()
                 
-
+        #this is the last function that is called, all the actions about battle happens here until Game Over
     def battle_menu(self):
+        #get hp
         pokemon_hp = self.player.get_pokemon_hp()
         opponent_hp = self.opponent.get_pokemon_hp()
 
         while pokemon_hp > 0 or opponent_hp > 0:
-            print("Your turn...")
-            print("Select your action")
-            print("1 - Attack, 2 - Heal")
+            print("Your turn..."  + "\n")
+            print("1 - Attack, 2 - Heal (random number)")
             pokemon_action = input("Your choice: ")
             if pokemon_action == "1":
                 #attack opponent
-                opponent_hp = self.calculate_hp("1", opponent_hp, self.player.selected_pokemon.attack)
+                opponent_hp = self.calculate_hp("1", self.player.selected_pokemon.name, self.opponent.selected_pokemon.name, opponent_hp, self.player.selected_pokemon.attack)
                 if opponent_hp <= 0:
                     print("Game Over, You Won!")
                     break
             else:
                 #heal pokemon
-                pokemon_hp = self.calculate_hp("2", pokemon_hp, self.player.selected_pokemon.attack)
-            print("Opponent turn...")
+                pokemon_hp = self.calculate_hp("2", self.player.selected_pokemon.name, self.player.selected_pokemon.name, pokemon_hp, self.player.selected_pokemon.attack)
+            print("Opponent turn..." + "\n")
             opponent_action = random.choice(["1", "2"])
             if opponent_action == "1":
                 #attack pokemon
-                pokemon_hp = self.calculate_hp("1", pokemon_hp, self.opponent.selected_pokemon.attack)
+                pokemon_hp = self.calculate_hp("1", self.opponent.selected_pokemon.name, self.player.selected_pokemon.name, pokemon_hp, self.opponent.selected_pokemon.attack)
                 if pokemon_hp <= 0:
                     print("Game Over, You lost.")
                     break
             else:
                 #heal opponent
-                opponent_hp = self.calculate_hp("2", opponent_hp, self.opponent.selected_pokemon.attack)
+                opponent_hp = self.calculate_hp("2", self.opponent.selected_pokemon.name, self.opponent.selected_pokemon.name, opponent_hp, self.opponent.selected_pokemon.attack)
             
             
-    def calculate_hp(self, action, pokemon_hp, opponent_attack):
+    def calculate_hp(self, action: str, pokemon_name: str, opponent_name: str, pokemon_hp: int, opponent_attack: int) -> int:
         if action == "1":
             #attack
-            print("Pokemon attacks!")
+            print(pokemon_name + " attacks!")
             pokemon_hp -= opponent_attack
             print("-" + str(opponent_attack) + " hp")
-            print("your opponent's remaining hp is... " + str(pokemon_hp))
+            print(opponent_name + " remaining hp is... " + str(pokemon_hp))
             print("")
-            return pokemon_hp
         elif action == "2":
             #heal
             if pokemon_hp < 100 and pokemon_hp > 0:
                 heal_num = random.choice([2, 5, 9, 13, 15])
                 pokemon_hp += heal_num
                 print("Healing applied")
-                print("+" + str(heal_num) + " to your hp")
-                print("remaining hp is " + str(pokemon_hp))
+                print("+" + str(heal_num) + " to " + pokemon_name + " hp")
+                print(pokemon_name + " remaining hp is " + str(pokemon_hp))
                 print("")
-                return pokemon_hp
             else:
                 print("Heal is not possible")
         else:
             print("Select 1 or 2")
+        return pokemon_hp
