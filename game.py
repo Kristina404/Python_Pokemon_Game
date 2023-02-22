@@ -13,10 +13,26 @@ class Game:
         ]
         self.opponent = Player(random.choice(self.pokemon_list))
 
+    def welcome(self):
+        print("Welcome to Pokemon Game!")
+
         #select Pokemon and call player menu
     def start_main_menu(self):
-        print("Welcome to Pokemon Game!")
-        self.player.pick_pokemon(self.pokemon_list)
+        #display a list of Pokemons
+        for pokemon in self.pokemon_list:
+            print(pokemon.id + " - " + pokemon.name + ": hp = " + str(pokemon.hp) + "; attack = " + str(pokemon.attack))
+        selected_id = input("Please choose a number of the Pokemon: ")
+        if int(selected_id) > len(self.pokemon_list):
+            print("Select number from 1 to 5")
+        else:
+            for pokemon in self.pokemon_list:
+                #find the object by selected id
+                if pokemon.id == selected_id:
+                    #set pokemon for Player
+                    self.player.set_pokemon(pokemon)
+                    print("You've chosen... " + pokemon.name + "! Good Choice!")
+                    break
+        #start player menu
         self.start_player_menu()
 
        #player menu displays options after Pokemon was selected
@@ -28,8 +44,7 @@ class Game:
             self.start_player_menu()
         elif user_selection == "2":
             #change pokemon
-            self.player.pick_pokemon(self.pokemon_list)
-            self.start_player_menu()
+            self.start_main_menu()
         elif user_selection == "3":
             #start fight
             print("Your opponent Pokemon is " + self.opponent.selected_pokemon.name + "\n")
