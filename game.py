@@ -24,6 +24,7 @@ class Game:
         selected_id = input("Please choose a number of the Pokemon: ")
         if int(selected_id) > len(self.pokemon_list):
             print("Select number from 1 to 5")
+            self.start_main_menu()
         else:
             for pokemon in self.pokemon_list:
                 #find the object by selected id
@@ -32,9 +33,9 @@ class Game:
                     self.player.set_pokemon(pokemon)
                     print("You've chosen... " + pokemon.name + "! Good Choice!")
                     break
-        #start player menu
-        self.start_player_menu()
-
+            #start player menu
+            self.start_player_menu()
+            
        #player menu displays options after Pokemon was selected
     def start_player_menu(self):
         user_selection = input("1 - Read description about your pokemon, \n2 - Change Pokemon \n3 - Start Fight! \nYour choice:  ")
