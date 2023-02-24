@@ -20,7 +20,7 @@ class Game:
     def start_main_menu(self):
         #display a list of Pokemons
         for pokemon in self.pokemon_list:
-            print(pokemon.id + " - " + pokemon.name + ": hp = " + str(pokemon.hp) + "; attack = " + str(pokemon.attack))
+            print(f"{pokemon.id} - {pokemon.name}: hp = {str(pokemon.hp)}; attack = {str(pokemon.attack)}")
         selected_id = input("Please choose a number of the Pokemon: ")
         if int(selected_id) > len(self.pokemon_list):
             print("Select number from 1 to 5")
@@ -31,7 +31,7 @@ class Game:
                 if pokemon.id == selected_id:
                     #set pokemon for Player
                     self.player.set_pokemon(pokemon)
-                    print("You've chosen... " + pokemon.name + "! Good Choice!")
+                    print(f"You've chosen... {pokemon.name}! Good Choice!")
                     break
             #start player menu
             self.start_player_menu()
@@ -48,7 +48,7 @@ class Game:
             self.start_main_menu()
         elif user_selection == "3":
             #start fight
-            print("Your opponent Pokemon is " + self.opponent.selected_pokemon.name + "\n")
+            print(f"Your opponent Pokemon is {self.opponent.selected_pokemon.name}\n")
             self.battle_menu()
                 
         #this is the last function that is called, all the actions about battle happens here until Game Over
@@ -88,8 +88,8 @@ class Game:
             #attack
             print(pokemon_name + " attacks!")
             pokemon_hp -= opponent_attack
-            print("-" + str(opponent_attack) + " hp")
-            print(opponent_name + " remaining hp is... " + str(pokemon_hp))
+            print(f"-{str(opponent_attack)} hp")
+            print(f"{opponent_name} remaining hp is... {str(pokemon_hp)}")
             print("")
         elif action == "2":
             #heal
@@ -97,8 +97,8 @@ class Game:
                 heal_num = random.choice([2, 5, 9, 13, 15])
                 pokemon_hp += heal_num
                 print("Healing applied")
-                print("+" + str(heal_num) + " to " + pokemon_name + " hp")
-                print(pokemon_name + " remaining hp is " + str(pokemon_hp))
+                print(f"+{str(heal_num)} to {pokemon_name} hp")
+                print(f"{pokemon_name} remaining hp is {str(pokemon_hp)}")
                 print("")
             else:
                 print("Heal is not possible")

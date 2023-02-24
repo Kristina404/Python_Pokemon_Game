@@ -10,10 +10,10 @@ class Player:
 
         #this function displays all Pokemon's atributes to the user
     def describe_selected_pokemon(self):
-            print("Name: " + self.selected_pokemon.name)
-            print("Description: " + self.selected_pokemon.description)
-            print("Attack: " + str(self.selected_pokemon.attack))
-            print("HP: " +  str(self.selected_pokemon.hp))
+            print(f"Name: {self.selected_pokemon.name}")
+            print(f"Description: {self.selected_pokemon.description}")
+            print(f"Attack: {str(self.selected_pokemon.attack)}")
+            print(f"HP: {str(self.selected_pokemon.hp)}")
 
     def get_pokemon_hp(self):
         return self.selected_pokemon.hp
