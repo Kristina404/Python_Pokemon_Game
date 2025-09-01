@@ -1,5 +1,6 @@
 class Pokemon:
-    def __init__(self, id, name, attack, description, hp) -> None:
+    """A class representing a Pokemon with its attributes."""
+    def __init__(self, id: str, name: str, attack: int, description: str, hp: int) -> None:
         self.id = id
         self.name = name
         self.attack = attack
