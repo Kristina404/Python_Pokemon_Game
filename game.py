@@ -36,6 +36,9 @@ class Game:
         for pokemon in self.pokemon_list:
             print(f"{pokemon.id} - {pokemon.name}: hp = {str(pokemon.hp)}; attack = {str(pokemon.attack)}")
         selected_id = input("Please choose a number of the Pokemon: ")
+        if selected_id not in ["1", "2", "3", "4", "5"]:
+            print("Select number from 1 to 5")
+            self.start_main_menu()
         if int(selected_id) > len(self.pokemon_list):
             print("Select number from 1 to 5")
             self.start_main_menu()
@@ -83,7 +86,7 @@ class Game:
                                                 self.player.selected_pokemon.attack)
                 if opponent_hp <= 0:
                     print("Game Over, You Won!")
-                    break
+                    return
             else:
                 # heal pokemon
                 pokemon_hp = self.calculate_hp("2", self.player.selected_pokemon.name,
@@ -98,7 +101,7 @@ class Game:
                                                self.opponent.selected_pokemon.attack)
                 if pokemon_hp <= 0:
                     print("Game Over, You lost.")
-                    break
+                    return
             else:
                 # heal opponent
                 opponent_hp = self.calculate_hp("2", self.opponent.selected_pokemon.name,
